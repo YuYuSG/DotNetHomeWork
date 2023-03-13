@@ -29,44 +29,66 @@ namespace ShapeObject
             for(int i = 0; i < 10; i++)
             {
                 int type = R.Next(0, 5);
+                ShapeJudegement J = new ShapeJudegement();
                 switch (type)
                 {
                    case 0:
                         {
-                            double a = R.Next(25)+R.NextDouble();
-                            double b = R.Next(25) + R.NextDouble();
-                            double c = R.Next(25) + R.NextDouble();
-                            shapes[i] = new Triangle(a, b, c);
-                            Console.WriteLine($"第{i+1}个形状为三角形，边长分别为：{a}，{b}，{c}");
+                            double a;
+                            double b;
+                            double c;
+                            do
+                            {
+                                a = R.Next(25) + R.NextDouble();
+                                b = R.Next(25) + R.NextDouble();
+                                c = R.Next(25) + R.NextDouble();
+                                shapes[i] = new Triangle(a, b, c);
+                            } while (!J.JudgeShape(shapes[i]));
+                            Console.WriteLine($"第{i + 1}个形状为三角形，边长分别为：{a}，{b}，{c}");
                             break;
-                        }
+                        }  
                     case 1:
                         {
-                            double w = R.Next(25) + R.NextDouble();
-                            double l = R.Next(25) + R.NextDouble();
-                            shapes[i] = new Rectangle(w,l);
+                            double w;
+                            double l;
+
+                            do {
+                                w = R.Next(25) + R.NextDouble();
+                                l = R.Next(25) + R.NextDouble();
+                                shapes[i] = new Rectangle(w, l);
+                            } while (!J.JudgeShape(shapes[i]));
                             Console.WriteLine($"第{i + 1}个形状为长方形，宽为：{w}，长为{l}");
                             break;
                         }
                     case 2:
                         {
-                            double e = R.Next(25) + R.NextDouble();
-                            shapes[i] = new Square(e);
+                            double e;
+                            do {
+                                e = R.Next(25) + R.NextDouble();
+                                shapes[i] = new Square(e);
+                            } while (!J.JudgeShape(shapes[i]));
                             Console.WriteLine($"第{i + 1}个形状为正方形，边长为：{e}");
                             break;
                         }
                     case 3:
                         {
-                            double a = R.Next(25) + R.NextDouble();
-                            double b = R.Next(25) + R.NextDouble();
-                            shapes[i] = new Ellipse(a, b);
+                            double a;
+                            double b;
+                            do {
+                                a = R.Next(25) + R.NextDouble();
+                                b = R.Next(25) + R.NextDouble();
+                                shapes[i] = new Ellipse(a, b);
+                            } while (!J.JudgeShape(shapes[i]));
                             Console.WriteLine($"第{i + 1}个形状为椭圆形，半长轴为：{a}，半短轴为{b}");
                             break;
                         }
                     case 4:
                         {
-                            double r = R.Next(25) + R.NextDouble();
-                            shapes[i] = new Circle(r);
+                            double r;
+                            do {
+                                r = R.Next(25) + R.NextDouble();
+                                shapes[i] = new Circle(r);
+                            } while (!J.JudgeShape(shapes[i]));
                             Console.WriteLine($"第{i + 1}个形状为圆形，半径为：{r}");
                             break;
                         }
