@@ -28,10 +28,6 @@ namespace CrawlerPlus
             urls.Add(startUrl, false);
         }
 
-
-
-       
-
         // 开始爬取
         public void Crawl()
         {
@@ -45,6 +41,7 @@ namespace CrawlerPlus
                     if (IsHtml(url))  //如果该网页是html/aspx/php/jsp等网页，则解析并爬取下一级URL
                     {
                         current = url;
+                        break;
                     }
 
                 }
@@ -65,7 +62,7 @@ namespace CrawlerPlus
         // 判断当前网页是否是html/aspx/php/jsp等网页
         private bool IsHtml(string url)
         {
-            string[] fileTypes = { ".html", ".htm", ".aspx", ".php", ".jsp" };
+            string[] fileTypes = {"/", ".html", ".htm", ".aspx", ".php", ".jsp" };
             foreach (string fileType in fileTypes)
             {
                 if (url.EndsWith(fileType)) return true;
@@ -92,12 +89,11 @@ namespace CrawlerPlus
             }
         }
 
-
-        
+ 
         // 解析网页并将需要爬取的链接加入待爬取的网页集合中
         private void Parse(string html)
         {
-            string strRef = @"(href|HREF)[]* =[]*[""'][^""'#>] + [""']";  //查找页面中的所有超链接
+            string strRef = @"(href|HREF)[]*=[]*[""'][^""'#>]+[""']";  //查找页面中的所有超链接
             MatchCollection matches = new Regex(strRef).Matches(html);  //将这些链接的内容保存在 matches 集合中
             foreach (Match match in matches)
             {
@@ -115,7 +111,7 @@ namespace CrawlerPlus
         static void Main(string[] args)
         {
             Crawler crawler = new Crawler("http://www.cnblogs.com/", "http://www.cnblogs.com/");
-            crawler.Crawl();
+            new Thread(crawler.Crawl).Start();  //开始爬行
         }
     }
 }
